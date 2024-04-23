@@ -26,7 +26,11 @@ This guide will walk you through the process of building and running a Jupyter N
 
 First, you need to build your Docker image from the Dockerfile. Open your terminal and navigate to the directory containing your Dockerfile. Then run the following command:
 
-```bash
+
 docker build -t my-jupyter .
 docker run -p 8888:8888 jupyter/datascience-notebook
 
+
+
+## Output Of DataSet
+![output](https://github.com/zeo911/Docker_Jupyter_Assignment2/assets/113481205/9253623c-a93e-4507-9b9e-1cd69e97232d)
