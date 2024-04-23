@@ -1,19 +1,32 @@
-# Jupyter Notebook Dockerfile Summary
+# Dockerfile for Jupyter Notebook
 
-This Dockerfile creates a Docker container that runs a Jupyter Notebook server. Here's a breakdown of the key steps involved:
+This Dockerfile sets up a Docker container to run a Jupyter Notebook server. The key steps are:
 
-1. **Base Image**: We start with a base image that has the necessary environment for running Jupyter Notebook, such as `python:3.8-slim`.
+1. **Base Image**: We start from the `python:3.8` image, which includes Python 3.8 and is suitable for running Python applications.
 
-2. **Environment Setup**: We set up environment variables like `PATH` to include locations where executables like Jupyter are stored.
+2. **Working Directory**: We set `/app` as the working directory inside the container. All subsequent commands will be run from this directory.
 
-3. **Dependencies Installation**: We install dependencies required for Jupyter using `pip`. This includes the Jupyter package itself and any other libraries needed for our notebooks.
+3. **Copying Files**: We copy all files from the current directory on the host (`.`) into the `/app` directory inside the container. This includes the Jupyter notebooks and any other files you have in the directory.
 
-4. **Port Exposing**: We expose port `8888`, which is the default port that Jupyter Notebook runs on.
+4. **Exposing Port**: We expose port `8888`, which is the default port for Jupyter Notebook. This makes the Jupyter server accessible from outside the container.
 
-5. **Volume Creation**: We create a volume for persistent storage of notebooks. This allows us to retain notebooks even after the container is stopped or deleted.
+5. **Command**: We specify the command to run the Jupyter Notebook server with the following options:
+   - `--ip='0.0.0.0'`: This binds the server to all IP addresses of the container, making it accessible from any host.
+   - `--port=8888`: This confirms the server runs on port `8888`.
+   - `--no-browser`: This prevents Jupyter from trying to open a browser automatically.
+   - `--allow-root`: This allows Jupyter to be run as the root user inside the container, which is necessary since Docker containers run as root by default.
 
-6. **Running Jupyter**: We set the command to run Jupyter Notebook when the container starts. This includes setting the `--ip` to `0.0.0.0` to make the notebook accessible from outside the container and disabling token authentication for ease of access.
+By building a Docker image using this Dockerfile and running a container from it, you can easily start a Jupyter Notebook server that's ready for use.
 
-7. **Final Touches**: We add any final configuration needed, such as copying local files into the container or setting up additional environment variables.
+# Running Jupyter Notebook in Docker
 
-By following these steps, we ensure that our Docker container can run Jupyter Notebook efficiently and securely, ready for use in data analysis, machine learning, or any computational notebooks.
+This guide will walk you through the process of building and running a Jupyter Notebook server in a Docker container using the provided Dockerfile.
+
+## Building the Docker Image
+
+First, you need to build your Docker image from the Dockerfile. Open your terminal and navigate to the directory containing your Dockerfile. Then run the following command:
+
+```bash
+docker build -t my-jupyter .
+docker run -p 8888:8888 jupyter/datascience-notebook
+
